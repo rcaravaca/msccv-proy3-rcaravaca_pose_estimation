@@ -85,7 +85,7 @@ class CmuHandNetwork(network_base.BaseNetwork):
         (self.feed('Mconv6_stage6')
             .conv(1, 1, 22, 1, 1, relu=False, name='Mconv7_stage6'))
 
-        with tf.variable_scope('Openpose'):
+        with tf.compat.v1.variable_scope('Openpose'):
             (self.feed('Mconv7_stage6')
                  .concat(3, name='out'))
 

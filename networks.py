@@ -1,6 +1,8 @@
 import os
 from os.path import dirname, abspath
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import network_base
 
 from network_cmuhand import CmuHandNetwork

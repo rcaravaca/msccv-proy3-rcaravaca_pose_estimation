@@ -43,8 +43,8 @@ if __name__ == '__main__':
     output_w, output_h = args.input_width // scale, args.input_height // scale
     logger.info('define model+')
     with tf.device(tf.DeviceSpec(device_type="CPU")):
-        input_node = tf.placeholder(tf.float32, shape=(args.batchsize, args.input_height, args.input_width, 3), name='image')
-        heatmap_node = tf.placeholder(tf.float32, shape=(args.batchsize, output_h, output_w, 22), name='heatmap')
+        input_node = tf.compat.v1.placeholder(tf.float32, shape=(args.batchsize, args.input_height, args.input_width, 3), name='image')
+        heatmap_node = tf.compat.v1.placeholder(tf.float32, shape=(args.batchsize, output_h, output_w, 22), name='heatmap')
 
         # prepare data
         df = get_dataflow_batch(args.datapath, True, args.batchsize)
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     outputs = []
     for gpu_id in range(args.gpus):
         with tf.device(tf.DeviceSpec(device_type="GPU", device_index=gpu_id)):
-            with tf.variable_scope(tf.get_variable_scope(), reuse=(gpu_id > 0)):
+            with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope(), reuse=(gpu_id > 0)):
                 net, pretrain_path, last_layer = get_network("vgg", q_inp_split[gpu_id])
                 if args.checkpoint:
                     pretrain_path = args.checkpoint
